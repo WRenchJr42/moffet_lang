@@ -1,4 +1,4 @@
 @echo off
 setlocal
-cd /d C:\path\to\directory\containing\moffet.kai
+cd /d C:\Program Files\moffet_lang\moffet.kai
 moffet.kai
