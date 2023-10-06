@@ -1,14 +1,27 @@
-WELCOME HUMANS
+# MOFFET Language
 
-This code is a simple implementation of LLVM 
-For now , this code can behave as a LEXER.
+This code is a simple implementation of LLVM For now , this code can behave as a LEXER.
 
-So, How do you run it?
 
-For now , its running with g++ compiler 
 
-copy the code both the .cpp and .kai file , go to its directory.
+## Run Locally
 
-./moffet.kai
+Clone the project
 
-thats all!!
+```bash
+  git clone https://github.com/WRenchJr42/moffet_lang.git
+```
+
+Go to the project directory
+
+```bash
+  cd moffet_lang
+```
+
+Run Command
+
+```bash
+  ./moffet.kai
+```
+
+
