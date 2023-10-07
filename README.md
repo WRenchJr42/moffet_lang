@@ -1,6 +1,6 @@
 # MOFFET Language
 
-This code is a simple implementation of LLVM. For now , this code can behave as a LEXER.
+This code is a simple implementation of LLVM. For now , this code can behave as a LEXER and somewhat as a PARSER.
 
 
 
