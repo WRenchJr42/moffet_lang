@@ -23,7 +23,7 @@ Run Command
 ```bash
   ./moffet.kai
 ```
-For today please don't clone this repo, its filled with all sorts of bugs...
+Please don't clone this repo just yet, its filled with all sorts of bugs...
 
-However, I managed to reach 100 line code goal :))
+However, I managed to reach 300 line code goal :))
 
