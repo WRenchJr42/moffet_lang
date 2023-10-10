@@ -188,4 +188,114 @@ class FunAST
         }
 };
 
-/*-----TO BE CONTINUED------- Dont try it now , its super buggy*/
+static int CurrentToken;
+
+static int getNextToken()
+{
+    return CurrentToken = gettok();
+}
+
+std::unique_ptr<ExpressAST> LogError(const char *Str)
+{
+    fprintf(stderr,"Log Eroor: %s\n", Str);
+    return nullptr;
+}
+
+std::unique_ptr<PrototypeAST> LogError(const char *Str)
+{
+    LogError(Str);
+    return nullptr;
+}
+
+
+static std::unique_ptr<ExpressAST> ParseNumberExpress()
+{
+        auto Result = std::make_unique<NumExpressAST>(NumVal);
+        getNextToken();
+        return std:: move(Result);
+}
+
+static std::unique_ptr<ExpressAST> ParseParanthExpress()
+{
+    getNextToken();
+    auto V = ParseExpression();
+    if (!V) 
+    {
+        return nullptr;
+    }
+
+    if (CurrentToken ==')')
+    {
+        getNextToken();
+        return V;
+    }
+    else
+    {
+        return LogError("expect ')'");
+    }
+}
+
+static std::unique_ptr<ExpressAST> ParseIdentifierOrCallExpress()
+{
+    std::string IdName = IdentifierStr;
+
+    getNextToken();
+
+    if (CurrentToken == '()')
+    {
+        getNextToken();
+        std::vector<std::unique_ptr<ExpressAST>> Args;
+        while(true)
+        {
+            auto Arg = ParseExpressio();
+            if (Arg)
+            {
+                Args.push_back(Arg);
+            }
+            else
+            {
+                return nullptr;
+            }
+
+            if (CurrentToken == ')')
+            {
+                 getNextToken();
+                break;
+            }
+            else if (CurrentToken == ',')
+            {
+                getNextToken();
+                 continue;
+            }
+            else
+            {
+                return LogError("Expected ')' or ',' in argument list");
+            }
+        }
+        return std::make_unique<CallExpressAST>(IdName, std::move(Args));
+    }
+    else
+    {
+        return std::make_unique<VarExpressAST>(IdName);
+    }
+}
+
+static std::unique_ptr<ExpressAST> ParsePrimary()
+{
+    switch (CurrentToken)
+    {
+        case tok_identifier:
+            return ParseIdentifierOrCallExpress();
+        
+        case tok_number:
+            return ParseNumberExpress();
+
+        case '(':
+            return ParseParnthExpress();
+        
+        default:
+            return LogError("Unknown token when expecting an Expression");
+    }
+}
+
+/* ______Super buggy one , still under developmet, Until its fixed , you can play around with the lexer______*/
