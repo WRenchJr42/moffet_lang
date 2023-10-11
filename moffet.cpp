@@ -66,7 +66,7 @@ static int gettok()
         return tok_number;
     }
 
-    if (LastChar == '#') 
+    if (LastChar == '$') 
     {
    
         do
