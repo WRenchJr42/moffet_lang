@@ -1,7 +1,7 @@
 # MOFFET Language
 
-This code is a simple implementation of LLVM. For now , this code can behave as a LEXER and somewhat as a PARSER.
-
+This code is a simple implementation of LLVM. For now , this code can behave as a LEXER and as a PARSER.
+Even thought this is not very advanced in its area, this still can do pretty good job at the above mentioned tasks. 
 
 
 ## Run Locally
@@ -23,7 +23,7 @@ Run Command
 ```bash
   ./moffet.kai
 ```
-Please don't clone this repo just yet, its filled with all sorts of bugs...
 
-However, I managed to reach 300 line code goal :))
+
+500 lines, target reached :))
 
