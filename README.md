@@ -2,7 +2,7 @@
 
 This code is a simple implementation of LLVM. For now , this code can behave as a LEXER and as a PARSER.
 Even thought this is not very advanced in its area, this still can do pretty good job at the above mentioned tasks. 
-Bsic Codegen added for a few clagges and subclasses.
+Basic Codegen added for a few clagges and subclasses.
 
 It is suuuper Buggy right  now, :(
 But will fix it shortly 
