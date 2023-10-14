@@ -1,10 +1,21 @@
+#include "llvm/ADT/APFloat.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/IR/BasicBlock.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/LLVMContext.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/Type.h"
+#include "llvm/IR/Verifier.h"
+#include <algorithm>
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
 #include <map>
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 enum Token {
@@ -98,6 +109,7 @@ class ExpressAST
 {
     public:
         virtual ~ExpressAST() = default;
+        virtual Value *CodeGen() =0;
 };
 
 
@@ -110,6 +122,7 @@ class NumExpressAST : public ExpressAST
         {
 
         }
+        Value *CodeGen() override;
 };
 
 
@@ -124,6 +137,20 @@ class VarExprAST : public ExpressAST
         }
 };
 
+Value *NumExpressAST::CodeGen()
+{
+    return ConstantFP::get(*TheContext, APFloat(Val));
+} 
+
+Value *VarExprAST::CodeGen()
+{
+    Value *V +NamedValue[Burp];
+    if (!V)
+    {
+        LogError("Unkonow Variable Name");
+    }
+    return V;
+}
 
 class KaiExpressAST : public ExpressAST 
 {
@@ -137,6 +164,42 @@ class KaiExpressAST : public ExpressAST
     }
 };
 
+Value *KaiExpressAST::CodeGen()
+{
+    Value *L = LHS->CodeGen();
+    Value *R = RHS->CodeGen();
+    if (!L || !R)
+    {
+        return nullptr;
+    
+        switch (Op)
+        {
+            case '+':
+                return Builder.CreateFAdd(L,R,"addtmp");
+
+            case '-':  
+                return Builder.CreateFSub(L,R,"subtmp");
+
+            case '*':
+                return Builder.CreateFMul(L,R,"multmp");
+
+            case '<':
+                L = Builder.CreateFCmpULT(L,R,"cmptmp");
+                return Builder -> CreateUIToFP(L, Type::getDoubleTy(TheContext),"booltmp")
+
+            default:
+                return LogErrorV("Invalid Kai Operator");
+        }  
+    }     
+    {
+    case /* constant-expression */:
+        /* code */
+        break;
+    
+    default:
+        break;
+    }
+}
 
 class CallExpressAST : public ExpressAST 
 {
@@ -150,6 +213,31 @@ class CallExpressAST : public ExpressAST
         }
 };
 
+Value *CallExpressAST::CodeGen()
+{
+    Fun *CalleeF = TheModule -> getFun(Callee);
+    if (!CalleeF -> arg_size() != Args.size())
+    {
+        return LogErrorV("Unknown Function Referenced");
+    }
+
+    if (CalleeF->arg_size() != Args.size())
+    {
+        return LogErrorV("Incorrect # arguments passed");
+    }
+    
+
+    std::vector<Value *> ArgsV;
+    for (unsigned i = 0, e = Args.size(); i != e; ++i) 
+    {
+        ArgsV.push_back(Args[i]->codegen());
+        if (!ArgsV.back())
+        return nullptr;
+    }
+
+    return Builder->CreateCall(CalleeF, ArgsV, "calltmp");
+}
+}
 
 class PrototypeAST 
 {
@@ -164,7 +252,7 @@ class PrototypeAST
 
     const std::string &getName() const { return Burp; }
 };
-
+// CodeGen Function ...Very Buggy 
 
 class FunAST {
     std::unique_ptr<PrototypeAST> Pro;
@@ -495,7 +583,16 @@ static void MainLoop() {
     }
 }
 
+static std::unique_ptr<LLVMContext> TheContext;
+static std::unique_ptr<IRBuilder<>> Builder(TheContext);
+static std::unique_ptr<Module> TheModule;
+static std::map<std::string, Value *> NamedValues;
 
+Value *LogErrorV(const char *Str)
+{
+    LogError(Str);
+    return nullptr;
+}
 
 int main() {
   
