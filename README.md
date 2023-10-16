@@ -4,7 +4,7 @@ This code is a simple implementation of LLVM. For now , this code can behave as 
 Even thought this is not very advanced in its area, this still can do pretty good job at the above mentioned tasks. 
 Basic Codegen added for a few clagges and subclasses.
 
-It is suuuper Buggy right  now, :(
+It is suuuper Buggy right  now, :((
 But will fix it shortly 
 And, yes I'll document it in the future.
  
