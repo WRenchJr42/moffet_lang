@@ -60,3 +60,13 @@ Clone the project:
 
 ```bash
 git clone https://github.com/WRenchJr42/moffet_lang.git
+```
+Navigate to the project directory:
+```bash
+cd moffet_lang
+```
+
+Run the interpreter:
+```bash
+./moffet.kai
+```
