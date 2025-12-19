@@ -3,8 +3,6 @@
 Moffet is an **experimental LLVM-based language frontend** built to explore compiler design, program analysis, and LLVM IR generation.  
 The project focuses on understanding how source code is transformed through lexical analysis, parsing, AST construction, and lowered into LLVM Intermediate Representation (IR).
 
-This project is educational in nature and was created to gain hands-on experience with **compiler frontends and low-level program representation**, forming a foundation for future work in static analysis and security tooling.
-
 ---
 
 ## Overview
@@ -16,8 +14,7 @@ Moffet currently implements:
 - **Operator precedence parsing**
 - **Basic LLVM IR code generation** using `IRBuilder`
 
-The design is inspired by LLVM’s *Kaleidoscope* tutorial, with custom modifications and extensions to deepen understanding of compiler pipelines.
-
+The design is inspired by LLVM’s *Kaleidoscope* tutorial, with custom modifications and extensions.
 ---
 
 ## Implemented Features
@@ -41,8 +38,6 @@ This implementation is **experimental and not production-ready**:
 - Only a limited subset of language features is supported
 - Some components are still under refinement
 
-These limitations are intentional, as the primary goal of the project is **learning and correctness**, not completeness.
-
 ---
 
 ## Motivation
@@ -50,7 +45,6 @@ These limitations are intentional, as the primary goal of the project is **learn
 This project was built to:
 - Understand compiler frontend architecture
 - Gain familiarity with LLVM internals and IR
-- Explore how program structure can be modeled for future **static analysis** and **security-oriented tooling**
 
 ---
 
